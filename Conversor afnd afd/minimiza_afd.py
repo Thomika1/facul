@@ -85,11 +85,11 @@ def minimize_dfa(filename):
 
 
     with open("output/saidaMin.txt", "w") as f:
-        f.write(" ".join(["Q" + state for state in new_states]) + "\n")  # Adiciona "Q" na frente de cada estado
-        f.write("Q" + start_state + "\n")  # Adiciona "Q" na frente do start_state
-        f.write(" ".join(["Q" + state for state in final_states]) + "\n")  # Adiciona "Q" na frente de cada final_state
+        f.write(" ".join(["Q" + state for state in new_states]) + "\n")  
+        f.write("Q" + start_state + "\n")  
+        f.write(" ".join(["Q" + state for state in final_states]) + "\n")  
         for (state, symbol), next_state in new_transitions.items():
-            f.write(f"Q{state} {symbol} Q{next_state}\n")  # Adiciona "Q" na frente de cada estado de transição
+            f.write(f"Q{state} {symbol} Q{next_state}\n")  
 
 
 
