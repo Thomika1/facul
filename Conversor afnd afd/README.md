@@ -24,3 +24,9 @@ Entradas devem ser escritas em um arquivo .txt com o nome "entrada.txt" no forma
 > 6 0 8\
 
 O arquivo "palavras.txt" deve receber as palavras para serem testadas pelo afd e deve possuir uma palavra por linha, sem espaços.
+> xxxx
+> xxxxx
+> xxxyyyy
+> xxyyxx
+> xxxxyyyyy
+Onde x e y devem ser 1s ou 0s.
