@@ -1,9 +1,6 @@
 # Conversor AFND para AFD minimizado
-Entradas devem ser no formato
+Entradas devem ser escritas em um arquivo .txt com o nome "entrada.txt" no formato especificado a seguir:
 
-
-
-Onde
 * Primeira linha: Todos os estados
 * Seguda linha: Estado inicial
 * Terceira Linha: Estados finais\
