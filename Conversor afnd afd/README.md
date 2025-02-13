@@ -29,4 +29,5 @@ O arquivo "palavras.txt" deve receber as palavras para serem testadas pelo afd e
 > xxxyyyy\
 > xxyyxx\
 > xxxxyyyyy\
+
 Onde x e y devem ser 1s ou 0s.
