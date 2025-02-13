@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     escrever_afd('output/saida.txt', estados_afd, estado_inicial_afd, estados_finais_afd, transicoes_afd)
 
-    minimize_dfa("output/saida.txt")
+    minimizar_afd("output/saida.txt")
 
 
 
