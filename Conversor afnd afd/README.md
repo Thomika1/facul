@@ -1,5 +1,5 @@
-## Conversor AFND para AFD minimizado
-# Entradas
+# Conversor AFND para AFD minimizado
+## Entradas
 Entradas devem ser escritas em um arquivo .txt com o nome "entrada.txt" no formato especificado a seguir:
 
 * Primeira linha: Todos os estados
@@ -30,7 +30,9 @@ O arquivo "palavras.txt" deve receber as palavras para serem testadas pelo afd e
 > xxxyyyy\
 > xxyyxx\
 > xxxxyyyyy
-# Requisitos
+
+## Requisitos
+
 Onde x e y devem ser 1s ou 0s.
 
 Para rodar o programa, deve-se instalar o programa graphviz no seu sistema operacional e instalar a biblioteca python do graphviz:
