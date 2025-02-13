@@ -1,96 +1,88 @@
+def encontrar_conjunto(pai, e):
+    if pai[e] != e:
+        pai[e] = encontrar_conjunto(pai, pai[e])
+    return pai[e]
 
-def find_set(parent, e):
-    if parent[e] != e:
-        parent[e] = find_set(parent, parent[e])
-    return parent[e]
-
-def union(parent, rank, e1, e2):
-    root1, root2 = find_set(parent, e1), find_set(parent, e2)
-    if root1 != root2:
-        if rank[root1] > rank[root2]:
-            parent[root2] = root1
+def unir(pai, rank, e1, e2):
+    raiz1, raiz2 = encontrar_conjunto(pai, e1), encontrar_conjunto(pai, e2)
+    if raiz1 != raiz2:
+        if rank[raiz1] > rank[raiz2]:
+            pai[raiz2] = raiz1
         else:
-            parent[root1] = root2
-            if rank[root1] == rank[root2]:
-                rank[root2] += 1
+            pai[raiz1] = raiz2
+            if rank[raiz1] == rank[raiz2]:
+                rank[raiz2] += 1
 
-def get_sets(parent):
-    groups = {}
-    for e in parent:
-        root = find_set(parent, e)
-        if root not in groups:
-            groups[root] = set()
-        groups[root].add(e)
-    return list(groups.values())
+def obter_conjuntos(pai):
+    grupos = {}
+    for e in pai:
+        raiz = encontrar_conjunto(pai, e)
+        if raiz not in grupos:
+            grupos[raiz] = set()
+        grupos[raiz].add(e)
+    return list(grupos.values())
 
-def minimize_dfa(filename):
-    with open(filename, "r") as f:
-        lines = f.read().strip().split("\n")
+def minimizar_afd(nome_arquivo):
+    with open(nome_arquivo, "r") as f:
+        linhas = f.read().strip().split("\n")
     
-    states = lines[0].split()
-    start_state = lines[1].strip()
-    final_states = set(lines[2].split())
-    transitions = {}
-    terminals = set()
+    estados = linhas[0].split()
+    estado_inicial = linhas[1].strip()
+    estados_finais = set(linhas[2].split())
+    transicoes = {}
+    terminais = set()
     
-    for line in lines[3:]:
-        state, symbol, next_state = line.split()
-        transitions[(state, symbol)] = next_state
-        terminals.add(symbol)
+    for linha in linhas[3:]:
+        estado, simbolo, proximo_estado = linha.split()
+        transicoes[(estado, simbolo)] = proximo_estado
+        terminais.add(simbolo)
     
-    def order_tuple(a, b):
+    def ordenar_tupla(a, b):
         return (a, b) if a < b else (b, a)
     
-    table = {}
-    sorted_states = sorted(states)
+    tabela = {}
+    estados_ordenados = sorted(estados)
     
-    for i, s1 in enumerate(sorted_states):
-        for s2 in sorted_states[i+1:]:
-            table[(s1, s2)] = (s1 in final_states) != (s2 in final_states)
+    for i, e1 in enumerate(estados_ordenados):
+        for e2 in estados_ordenados[i+1:]:
+            tabela[(e1, e2)] = (e1 in estados_finais) != (e2 in estados_finais)
     
-    flag = True
-    while flag:
-        flag = False
-        for i, s1 in enumerate(sorted_states):
-            for s2 in sorted_states[i+1:]:
-                if table[(s1, s2)]:
+    alterado = True
+    while alterado:
+        alterado = False
+        for i, e1 in enumerate(estados_ordenados):
+            for e2 in estados_ordenados[i+1:]:
+                if tabela[(e1, e2)]:
                     continue
-                for w in terminals:
-                    t1 = transitions.get((s1, w))
-                    t2 = transitions.get((s2, w))
+                for w in terminais:
+                    t1 = transicoes.get((e1, w))
+                    t2 = transicoes.get((e2, w))
                     if t1 is not None and t2 is not None and t1 != t2:
-                        marked = table[order_tuple(t1, t2)]
-                        flag = flag or marked
-                        table[(s1, s2)] = marked
-                        if marked:
+                        marcado = tabela[ordenar_tupla(t1, t2)]
+                        alterado = alterado or marcado
+                        tabela[(e1, e2)] = marcado
+                        if marcado:
                             break
     
-    parent = {s: s for s in states}
-    rank = {s: 0 for s in states}
+    pai = {e: e for e in estados}
+    rank = {e: 0 for e in estados}
     
-    for (s1, s2), marked in table.items():
-        if not marked:
-            union(parent, rank, s1, s2)
+    for (e1, e2), marcado in tabela.items():
+        if not marcado:
+            unir(pai, rank, e1, e2)
     
-    state_groups = get_sets(parent)
-    new_states = [str(i + 1) for i in range(len(state_groups))]
-    state_map = {s: str(i + 1) for i, group in enumerate(state_groups) for s in group}
+    grupos_estados = obter_conjuntos(pai)
+    novos_estados = [str(i + 1) for i in range(len(grupos_estados))]
+    mapa_estados = {e: str(i + 1) for i, grupo in enumerate(grupos_estados) for e in grupo}
     
-    start_state = state_map[start_state]
-    final_states = {state_map[s] for s in final_states}
+    estado_inicial = mapa_estados[estado_inicial]
+    estados_finais = {mapa_estados[e] for e in estados_finais}
     
-    new_transitions = {(state_map[k[0]], k[1]): state_map[v] for k, v in transitions.items()}
+    novas_transicoes = {(mapa_estados[k[0]], k[1]): mapa_estados[v] for k, v in transicoes.items()}
     
-    
-
-
     with open("output/saidaMin.txt", "w") as f:
-        f.write(" ".join(["Q" + state for state in new_states]) + "\n")  
-        f.write("Q" + start_state + "\n")  
-        f.write(" ".join(["Q" + state for state in final_states]) + "\n")  
-        for (state, symbol), next_state in new_transitions.items():
-            f.write(f"Q{state} {symbol} Q{next_state}\n")  
-
-
-
-
+        f.write(" ".join(["Q" + estado for estado in novos_estados]) + "\n")  # Adiciona "Q" na frente de cada estado
+        f.write("Q" + estado_inicial + "\n")  # Adiciona "Q" na frente do estado inicial
+        f.write(" ".join(["Q" + estado for estado in estados_finais]) + "\n")  # Adiciona "Q" na frente de cada estado final
+        for (estado, simbolo), proximo_estado in novas_transicoes.items():
+            f.write(f"Q{estado} {simbolo} Q{proximo_estado}\n")  # Adiciona "Q" na frente de cada estado de transição
