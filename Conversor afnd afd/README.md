@@ -35,7 +35,7 @@ Onde x e y devem ser 1s ou 0s.
 
 ## Requisitos
 
-Para rodar o programa, deve-se instalar o programa graphviz no seu sistema operacional e instalar a biblioteca python do graphviz:
+Para rodar o programa, deve-se instalar o software graphviz no seu sistema operacional e instalar a biblioteca python do graphviz:
 
 Para instalar no sistema operacional LINUX:
 ```
