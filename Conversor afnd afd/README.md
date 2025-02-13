@@ -3,7 +3,7 @@ Entradas devem ser escritas em um arquivo .txt com o nome "entrada.txt" no forma
 
 * Primeira linha: Todos os estados
 * Seguda linha: Estado inicial
-* Terceira Linha: Estados finais\
+* Terceira Linha: Estados finais
 * Quarta linha em diante: As transições no formato x y z, onde x é o estado de saída, y o símbo0lo de transição e z o estado de chegada.
 
 > 0 1 2 3 4 5 6 7 8\
