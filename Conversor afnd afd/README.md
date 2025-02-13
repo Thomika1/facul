@@ -31,3 +31,14 @@ O arquivo "palavras.txt" deve receber as palavras para serem testadas pelo afd e
 > xxxxyyyyy
 
 Onde x e y devem ser 1s ou 0s.
+
+Para rodar o programa, deve-se instalar o programa graphviz no seu sistema operacional e instalar a biblioteca python do graphviz:
+Para instalar no sistema operacional LINUX:
+```
+sudo apt update
+sudo apt install graphviz
+```
+Para instalar o pacote no seu ambiente virtual python:
+```
+pip install graphviz
+```
