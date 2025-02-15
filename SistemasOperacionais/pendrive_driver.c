@@ -1,5 +1,13 @@
+#include <linux/module.h>
+#include <linux/fs.h>
+#include <linux/uaccess.h>
+#include <linux/slab.h>
 #include <linux/device.h>
-
+#include <linux/dcache.h>
+#include <linux/namei.h>
+#include <linux/file.h>
+#include <linux/string.h>
+#include <linux/mnt_idmapping.h>
 
 #define DEVICE_NAME "pendrive_driver"  //Nome do driver
 #define CLASS_NAME "pendrive"
@@ -18,7 +26,7 @@ static int device_open(struct inode *, struct file *);
 static int device_release(struct inode *, struct file *);
 static ssize_t device_write(struct file *, const char __user *, size_t, loff_t *);
 static int listar_arquivos_da_pasta(const char *path);
-
+static int deletar_arquivo(const char *path);
 /*
 Essas são declarações de funções que implementam operações do driver de caractere, como abrir, 
 liberar e escrever no dispositivo. Elas serão associadas a um conjunto de operações de arquivo 
@@ -80,6 +88,35 @@ Retorna true para continuar iterando no diretório.
 */
 
 
+
+static int deletar_arquivo(const char *path) {
+    struct path file_path;
+    struct mnt_idmap *idmap;
+    int ret;
+
+    // Resolve o caminho do arquivo
+    ret = kern_path(path, LOOKUP_FOLLOW, &file_path);
+    if (ret) {
+        pr_err("Erro ao resolver o caminho do arquivo: %s\n", path);
+        return ret;
+    }
+
+    // Obtém o mnt_idmap do mount point
+    idmap = mnt_idmap(file_path.mnt);
+
+    // Deleta o arquivo
+    ret = vfs_unlink(idmap, d_inode(file_path.dentry->d_parent), file_path.dentry, NULL);
+    if (ret) {
+        pr_err("Erro ao deletar o arquivo: %s\n", path);
+    } else {
+        pr_info("Arquivo deletado com sucesso: %s\n", path);
+    }
+
+    // Libera o path
+    path_put(&file_path);
+
+    return ret;
+}
 // Função principal para listar arquivos em um diretório
 static int listar_arquivos_da_pasta(const char *path) {
     struct file *dir_file;
@@ -114,6 +151,7 @@ static ssize_t device_write(struct file *filep, const char __user *buffer, size_
 {
     	
     char *comando;
+    char *nome_arquivo;
 
     if (len > PATH_MAX) {
         printk(KERN_ERR "Caminho muito longo\n");
@@ -133,17 +171,19 @@ static ssize_t device_write(struct file *filep, const char __user *buffer, size_
 
     comando[len] = '\0'; // Finaliza a string
     
-    if(strcmp(comando,"LIST_FILES") == 0){
-    	printk(KERN_INFO " Listando arquivos da pasta %s\n\n", path); //Print pelo kernel
-    	listar_arquivos_da_pasta(path);
-    
-    }else if (strcmp(comando,"DELETE_FILE") == 0){
-        printk(KERN_INFO "Deletando arquivo %s\n", path);
-    }else{
-    	strcpy(path, comando);
-    	printk(KERN_INFO "Caminho recebido: %s\n", path);   	 
+    if (strncmp(comando, "DELETE_FILE:", 12) == 0) {
+        // Extrai o nome do arquivo após "DELETE_FILE:"
+        nome_arquivo = comando + 12;
+        printk(KERN_INFO "Deletando arquivo: %s\n", nome_arquivo);
+        deletar_arquivo(nome_arquivo);
+    } else if (strcmp(comando, "LIST_FILES") == 0) {
+        printk(KERN_INFO "Listando arquivos da pasta %s\n\n", path);
+        listar_arquivos_da_pasta(path);
+    } else {
+        strcpy(path, comando);
+        printk(KERN_INFO "Caminho recebido: %s\n", path);
     }
-	
+	kfree(comando);
     return len;
 }
 
