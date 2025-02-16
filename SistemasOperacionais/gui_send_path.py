@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
+import threading
+import subprocess
 
 DEVICE_FILE = "/dev/pendrive_driver"  # Caminho do dispositivo
 pendrive_path = ""  # Variável global para armazenar o caminho do pendrive
@@ -59,12 +61,18 @@ def on_focus_out(event):
         entry_nome_arquivo.insert(0, placeholder_text)
         entry_nome_arquivo.config(fg="grey")  # Muda a cor do texto para cinza
 
+def monitorar_logs():
+    """Monitora os logs do kernel em tempo real."""
+    process = subprocess.Popen(["tail", "-f", "/var/log/syslog"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    for line in iter(process.stdout.readline, ""):
+        text_widget.insert(tk.END, line)
+        text_widget.see(tk.END) 
 
 
 # Interface gráfica
 root = tk.Tk()
 root.title("UTFPR DRIVER")
-root.geometry("1500x800")
+root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
 root.configure(background='white')
 
 label = tk.Label(root, text="Selecione uma Ação para o Driver de Dispositivo", bg="white", font=("Arial", 20, 'bold'))
@@ -84,6 +92,12 @@ entry_nome_arquivo.pack(pady=10)
 
 btn_deletar_arquivo = tk.Button(root, text="Deletar Arquivo", font=("Arial", 22), command=deletar_arquivo, width=20, height=1, activebackground="Green", bg="yellow")
 btn_deletar_arquivo.pack(pady=10)
+
+text_widget = tk.Text(root, wrap="word", height=25, width=100, font=("Courier", 10))
+text_widget.pack(padx=10, pady=10, fill="x", expand=True)
+
+# Cria uma thread para atualziar os logs
+threading.Thread(target=monitorar_logs, daemon=True).start()
 
 btn_exit = tk.Button(root, text="Sair", fg="white", font=("Arial", 42), command=root.quit, width=5, height=1, activebackground="Green", bg="black")
 btn_exit.pack(pady=30)

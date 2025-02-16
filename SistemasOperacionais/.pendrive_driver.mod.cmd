@@ -1,0 +1,1 @@
+savedcmd_/home/thomaz/Documents/Projetos/facul/facul/SistemasOperacionais/pendrive_driver.mod := printf '%s\n'   pendrive_driver.o | awk '!x[$$0]++ { print("/home/thomaz/Documents/Projetos/facul/facul/SistemasOperacionais/"$$0) }' > /home/thomaz/Documents/Projetos/facul/facul/SistemasOperacionais/pendrive_driver.mod
