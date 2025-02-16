@@ -22,7 +22,7 @@ nota: apt eh o gerenciador de pacotes debian, talvez seja necesário checar o eq
 Para usar corretamente o driver copie o caminho do seu dispositivo pen drive no formato padrao do linux `/[seu caminho]/[pendrive]`.
 nota: é possível ver o caminho do seu pen drive no seu gerenciador de arquivos e usando o comando pwd ao navegar ate o pendrive no terminal.
 * Após preencher o caminho do pen drive já é possível listar os arquivos presentes no pendrive, eles serão exibidos nos logs do kernel.
-* Com o caminho do pendrive preenchido agora é possível digitar o nome do arquivo com o seu tipo para deletar-lo `exemplo.txt`.
-* A implementação da funcionalidade de mover arquivos ainda está em andamento, porém para utiliza-la futuramente é preciso preencher o caminho do destino no formato padrão do linux.
+* Com o caminho do pendrive preenchido agora é possível digitar o nome do arquivo com o seu tipo para apaga-lo `exemplo.txt`.
+* A implementação da funcionalidade de mover arquivos ainda está em andamento. Para utiliza-la futuramente é preciso preencher o caminho do destino no formato padrão do linux e utilizar o campo de nomear arquivos para preencher o nome do arquivo que deseja mover do pendrive.
   
 
