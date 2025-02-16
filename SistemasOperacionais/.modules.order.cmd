@@ -1,1 +1,0 @@
-savedcmd_/home/thomaz/Documents/Projetos/facul/facul/SistemasOperacionais/modules.order := {   echo /home/thomaz/Documents/Projetos/facul/facul/SistemasOperacionais/pendrive_driver.o; :; } > /home/thomaz/Documents/Projetos/facul/facul/SistemasOperacionais/modules.order
