@@ -46,3 +46,7 @@ Para instalar o pacote no seu ambiente virtual python:
 ```
 pip install graphviz
 ```
+Para iniciar o programa digite o comando no mesmo diretório em que os arquivos se encontram. Certifique-se que seu ambiente virtual python está ativo:
+```
+python main.py
+```
