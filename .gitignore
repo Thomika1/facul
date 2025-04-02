@@ -1,0 +1,15 @@
+/.metadata/
+
+# Ignora arquivos de compilação Java
+*.class
+
+# Ignora arquivos de configuração do Eclipse
+.classpath
+.project
+.settings/
+
+# Ignora arquivos de preferências
+*.prefs
+
+# Ignora diretórios gerados pelo IDE
+bin/
