@@ -4,11 +4,14 @@ public class Token {
 	
 	String lexema;
 	TipoToken padrao;
-	//lembrem-se da linha onde aparece o lexema, hein?!
+	Integer lineNumber;
 	
-	public Token(String lexema, TipoToken padrao) {
+	
+	public Token(String lexema, TipoToken padrao, Integer lineNumber) {
 		this.lexema=lexema;
 		this.padrao=padrao;
+		this.lineNumber = lineNumber;
+	
 	}
 	
 	@Override
@@ -30,5 +33,13 @@ public class Token {
 
 	public void setPadrao(TipoToken padrao) {
 		this.padrao = padrao;
+	}
+	
+	public Integer getLineNumber() {
+		return lineNumber;
+	}
+	
+	public void setLineNumber(Integer lineNumber) {
+		this.lineNumber = lineNumber;
 	}
 }
