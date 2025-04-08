@@ -30,7 +30,7 @@ Os projetos deste repositório foram desenvolvidos como parte dos desafios acad�
 
 ---
 
-# 🎓 College Projects  
+# 🎓 Uni Projects  
 
 This repository contains projects developed during my **Computer Engineering** studies at **Universidade Tecnológica Federal do Paraná (UTFPR)**. The projects cover different areas of computing, including **automata theory** and **operating systems**.  
 
