@@ -16,7 +16,7 @@ public class Token {
 	
 	@Override
 	public String toString() {
-		return "<"+lexema+","+padrao+">";
+		return "<"+lexema+","+padrao+","+lineNumber+">";
 	}
 	
 	public String getLexema() {
