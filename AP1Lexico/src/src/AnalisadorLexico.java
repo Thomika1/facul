@@ -16,13 +16,6 @@ public class AnalisadorLexico {
 	}
 	
 	public Token proximoToken() throws IOException {
-				
-		//int pos=0;
-		
-//		System.out.print("Tamanho da linha");
-//		System.out.print(line.length());
-//		System.out.print("     acessando o 3o caractere:");
-//		System.out.println(line.charAt(2));
 		
 		//while((line=ldat.lerProxLinha())!=null) {
 		//System.out.println("Dentro do metodo ler prox token");
@@ -41,17 +34,8 @@ public class AnalisadorLexico {
 				}
 			}
 			//System.out.println(line+" |Linha:"+counter);
-			
-			// ABORDAGENS
-			// transformar a linha em um array antes de envia-la para o analisador.
-			// se a linha eh tratada como array eu consigo identificar por meio de cadeias de condicional? ficaria muito
-			// extenso????
-			//
-			// como ficaria a ogranizacao entre ler a linha e o switch case para captar os tokens???
-			// tratar como uma string diretamente aqui seria viavel/elegante?
-			
 			//for (int i = pos; i < line.length(); i++){
-			for ( ; pos < line.length();){
+			for (; pos < line.length();){
 				
 			    char c = line.charAt(pos);  
 			    pos++;
@@ -62,6 +46,14 @@ public class AnalisadorLexico {
 					case '-': return  new Token("-", TipoToken.OpAritSub, counter);
 					case '>': return  new Token(">", TipoToken.OpRelMaior, counter);
 					case '<': return  new Token("<", TipoToken.OpRelMenor, counter);
+					case ':':
+						if(pos + 1 < line.length() && line.charAt(pos) == '=') {
+							pos++;
+							return new Token(":=", TipoToken.Atrib, counter);
+						}else {
+							
+							return  new Token(":", TipoToken.Delim, counter);							
+						}
 				
 				} // switch 
 			} // for
