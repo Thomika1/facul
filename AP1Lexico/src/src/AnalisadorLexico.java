@@ -51,10 +51,14 @@ public class AnalisadorLexico {
 							pos++;
 							return new Token(":=", TipoToken.Atrib, counter);
 						}else {
-							
 							return  new Token(":", TipoToken.Delim, counter);							
 						}
-				
+					case '=':
+						if(pos + 1 < line.length() && line.charAt(pos) == '=') {
+							pos++;
+							return new Token("==", TipoToken.OpRelIgual, counter);
+						}
+						
 				} // switch 
 			} // for
 			
