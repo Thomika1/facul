@@ -16,62 +16,124 @@ public class AnalisadorLexico {
 	}
 	
 	public Token proximoToken() throws IOException {
-		
-		//while((line=ldat.lerProxLinha())!=null) {
-		//System.out.println("Dentro do metodo ler prox token");
-		//System.out.println("linha:"+counter+" pos:"+pos+" tamanho:"+line.length());
-		
-		while(pos<=line.length()) {
-			if(pos==line.length()) {
-				line=ldat.lerProxLinha();
+
+		while (pos <= line.length()) {
+			if (pos == line.length()) {
+				line = ldat.lerProxLinha();
 				counter++;
-				//System.out.println("Zerou pos");
-				pos=0;
-				
-				if(line==null) {
+				pos = 0;
+
+				if (line == null) {
 					System.out.println("Fim arq");
 					break;
 				}
 			}
-			//System.out.println(line+" |Linha:"+counter);
-			//for (int i = pos; i < line.length(); i++){
-			for (; pos < line.length();){
-				
-			    char c = line.charAt(pos);  
-			    pos++;
-				switch(c) {
-					case '\n': break;
-					case '\t': break;
-					case '+': return  new Token("+", TipoToken.OpAritSoma, counter);
-					case '-': return  new Token("-", TipoToken.OpAritSub, counter);
-					case '>': return  new Token(">", TipoToken.OpRelMaior, counter);
-					case '<': return  new Token("<", TipoToken.OpRelMenor, counter);
-					case ':':
-						if(pos + 1 < line.length() && line.charAt(pos) == '=') {
+
+			for (; pos < line.length(); ) {
+				char c = line.charAt(pos);
+				pos++;
+
+				switch (c) {
+					case '\n': case '\t': case ' ':
+						break; // ignora espaços e quebras de linha
+
+					// Operadores aritméticos
+					case '+': return new Token("+", TipoToken.OpAritSoma, counter);
+					case '-': return new Token("-", TipoToken.OpAritSub, counter);
+					case '*': return new Token("*", TipoToken.OpAritMult, counter);
+					case '/': return new Token("/", TipoToken.OpAritDiv, counter);
+
+					// Operadores relacionais
+					case '>':
+						if (pos < line.length() && line.charAt(pos) == '=') {
 							pos++;
-							return new Token(":=", TipoToken.Atrib, counter);
-						}else {
-							return  new Token(":", TipoToken.Delim, counter);							
+							return new Token(">=", TipoToken.OpRelMaiorIgual, counter);
+						} else {
+							return new Token(">", TipoToken.OpRelMaior, counter);
+						}
+					case '<':
+						if (pos < line.length() && line.charAt(pos) == '=') {
+							pos++;
+							return new Token("<=", TipoToken.OpRelMenorIgual, counter);
+						} else {
+							return new Token("<", TipoToken.OpRelMenor, counter);
 						}
 					case '=':
-						if(pos + 1 < line.length() && line.charAt(pos) == '=') {
+						if (pos < line.length() && line.charAt(pos) == '=') {
 							pos++;
 							return new Token("==", TipoToken.OpRelIgual, counter);
+						} else {
+							return new Token("=", TipoToken.ERROR, counter);
+						}
+					case '!':
+						if (pos < line.length() && line.charAt(pos) == '=') {
+							pos++;
+							return new Token("!=", TipoToken.OpRelDif, counter);
+						} else {
+							return new Token("!", TipoToken.ERROR, counter);
+						}
+
+					// Atribuição e delimitador
+					case ':':
+						if (pos < line.length() && line.charAt(pos) == '=') {
+							pos++;
+							return new Token(":=", TipoToken.Atrib, counter);
+						} else {
+							return new Token(":", TipoToken.Delim, counter);
+						}
+
+					// Parênteses
+					case '(':
+						return new Token("(", TipoToken.AbrePar, counter);
+					case ')':
+						return new Token(")", TipoToken.FechaPar, counter);
+					case '"':
+						StringBuilder cadeia = new StringBuilder();
+						cadeia.append('"');
+						while (pos < line.length() && line.charAt(pos) != '"') {
+							cadeia.append(line.charAt(pos));
+							pos++;
+						}
+						if (pos < line.length() && line.charAt(pos) == '"') {
+							cadeia.append('"');
+							pos++; 
+							return new Token(cadeia.toString(), TipoToken.Cadeia, counter);
+						} else {
+							
+							return new Token(cadeia.toString(), TipoToken.ERROR, counter);
 						}
 						
-				} // switch 
+						
+					// Identificadores e palavras-chave
+					default:
+						if (Character.isLetter(c)) {
+							StringBuilder sb = new StringBuilder();
+							sb.append(c);
+							while (pos < line.length() && Character.isLetterOrDigit(line.charAt(pos))) {
+								sb.append(line.charAt(pos));
+								pos++;
+							}
+							String lexema = sb.toString();
+
+							// Palavras-chave
+							switch (lexema) {
+								case "LER": return new Token("LER", TipoToken.PCLer, counter);
+								case "PROG": return new Token("PROG", TipoToken.PCProg, counter);
+								case "IMPRIMIR": return new Token("IMPRIMIR", TipoToken.PCImprimir, counter);
+								case "SE": return new Token("SE", TipoToken.PCSe, counter);
+								case "ENTAO": return new Token("ENTAO", TipoToken.PCEntao, counter);
+								case "ENQTO": return new Token("ENQTO", TipoToken.PCEnqto, counter);
+								case "INI": return new Token("INI", TipoToken.PCIni, counter);
+								case "FIM": return new Token("FIM", TipoToken.PCFim, counter);
+								case "E": return new Token("E", TipoToken.OpBoolE, counter);
+								case "OU": return new Token("OU", TipoToken.OpBoolOu, counter);
+								case "INT": return new Token("INT", TipoToken.PCInt, counter);
+								case "DEC": return new Token("DEC", TipoToken.PCDec, counter);
+							}
+						}
+				} // switch
 			} // for
-			
-//			switch(symbol) {
-//				case '\n': break;
-//				case '\t': break;
-//				case '+': return  new Token("+", TipoToken.OpAritSoma);
-//				case '-': return  new Token("-", TipoToken.OpAritSub);
-//				case '>': return  new Token(">", TipoToken.OpRelMaior);
-//				case '<': return  new Token("<", TipoToken.OpRelMenor);
-				//....
-//			}
 		} // while
 		return null;
-	} //  Proximo Token
+	}
 }
