@@ -35,7 +35,11 @@ public class AnalisadorLexico {
                 switch (c) {
                     case '\n': case '\t': case ' ':
                         break; // ignora espaços e quebras de linha
-
+                    // Comentarios
+                    case '#':
+                        // Ignora o resto da linha (comentário)
+                        pos = line.length(); // força sair do for
+                        break;
                     // Operadores aritméticos
                     case '+': return new Token("+", TipoToken.OpAritSoma, counter);
                     case '-': return new Token("-", TipoToken.OpAritSub, counter);
