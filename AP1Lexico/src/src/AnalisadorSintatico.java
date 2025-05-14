@@ -3,10 +3,13 @@ package src;
 import java.util.List;
 
 public class AnalisadorSintatico {
-
-	public AnalisadorSintatico(List<Token> tokens) {
-		// TODO Auto-generated constructor stub
-	}
+    private List<Token> tokens;
+    private int posicaoAtual;
+    
+    public AnalisadorSintatico(List<Token> tokens) {
+        this.tokens = tokens;
+        this.posicaoAtual = 0;
+    }
 
 	
 	
