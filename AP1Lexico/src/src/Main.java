@@ -34,6 +34,6 @@ public class Main {
         
         // Agora você pode passar a lista de tokens para o analisador sintático
         AnalisadorSintatico sintatico = new AnalisadorSintatico(tokens);
-        sintatico.analisar();
+       // sintatico.analisar();
     }
 }
