@@ -32,8 +32,14 @@ public class Main {
             t = lex.proximoToken();
         }
         
+        
         // Agora você pode passar a lista de tokens para o analisador sintático
         AnalisadorSintatico sintatico = new AnalisadorSintatico(tokens);
-       // sintatico.analisar();
+        try {
+            sintatico.analisarPrograma();
+            System.out.println("Análise sintática concluída com sucesso!");
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
