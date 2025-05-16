@@ -23,7 +23,7 @@ public class AnalisadorLexico {
                 pos = 0;
 
                 if (line == null) {
-                    System.out.println("Fim arq");
+                	new Token("EOF", TipoToken.EOF, counter);
                     break;
                 }
             }
@@ -133,6 +133,7 @@ public class AnalisadorLexico {
                                 case "E": return new Token("E", TipoToken.OpBoolE, counter);
                                 case "OU": return new Token("OU", TipoToken.OpBoolOu, counter);
                                 case "INT": return new Token("INT", TipoToken.PCInt, counter);
+                                case "REAL": return new Token("REAL", TipoToken.PCReal, counter);
                                 case "DEC": return new Token("DEC", TipoToken.PCDec, counter);
                                 default:
                                     if (Character.isLowerCase(lexema.charAt(0))) {
