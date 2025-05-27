@@ -3,15 +3,13 @@ package src;
 import java.util.List;
 
 public class AnalisadorSintatico {
-    private List<Token> tokens;     // Lista de tokens gerada pelo analisador léxico
-    private int posicaoAtual;       // Índice do próximo token a ser consumido
+    private List<Token> tokens;     // Lista de tokens gerada pelo analisador lexico
+    private int posicaoAtual;       // proximo token a ser consumido
 
     public AnalisadorSintatico(List<Token> tokens) {
         this.tokens = tokens;
         this.posicaoAtual = 0;
     }
-
-    // === Funções auxiliares ===
 
     /** 
      * Retorna o token atual; se ultrapassar o fim, retorna um token EOF.
@@ -24,10 +22,10 @@ public class AnalisadorSintatico {
         return tokens.get(posicaoAtual);
     }
 
-    /**
-     * Consome um token do tipo esperado; 
-     * caso contrário, lança exceção de erro sintático.
-     */
+    
+    // Consome um token do tipo esperado; 
+    // caso contrário, lança excecao de erro sintatico.
+ 
     private void consumir(TipoToken tipoEsperado) {
         Token atual = tokenAtual();
         if (atual.getPadrao() == tipoEsperado) {
@@ -36,63 +34,52 @@ public class AnalisadorSintatico {
             erro("Esperado: " + tipoEsperado + ", encontrado: " + atual.getPadrao(), atual);
         }
     }
-
-    /**
-     * Lança um RuntimeException indicando erro sintático,
-     * incluindo linha e mensagem.
-     */
+    
+    // func para formatar erro
     private void erro(String msg, Token token) {
         throw new RuntimeException("Erro sintático na linha " 
                 + token.getLineNumber() + ": " + msg);
     }
 
-    // Verifica se chegamos ao fim da lista de tokens
+    // Verifica o fim da lista
     private boolean chegouAoFim() {
         return tokenAtual().getPadrao() == TipoToken.EOF;
     }
 
-    // === Método inicial ===
+    // Inicio do analisaddor da linguagem
 
-    /**
-     * Regra: Programa = ':' 'DEC' ListaDeclaracoes ':' 'PROG' ListaComandos EOF
-     */
     public void analisarPrograma() {
-        consumir(TipoToken.Delim);           // ':'
-        consumir(TipoToken.PCDec);           // DEC
+        consumir(TipoToken.Delim);           
+        consumir(TipoToken.PCDec);           
 
-        analisarListaDeclaracoes();          // ListaDeclaracoes
+        analisarListaDeclaracoes();          
 
-        consumir(TipoToken.Delim);           // ':'
-        consumir(TipoToken.PCProg);          // PROG
+        consumir(TipoToken.Delim);           
+        consumir(TipoToken.PCProg);          
 
-        analisarListaComandos();             // ListaComandos
+        analisarListaComandos();             
 
-        // Após consumir todos os comandos, só deve restar EOF
+        // Apos consumir todos os tokens, verifica EOF
         if (!chegouAoFim()) {
             erro("Esperado fim de arquivo", tokenAtual());
         }
     }
 
-    // === Declarações ===
 
-    /**
-     * ListaDeclaracoes = { Declaracao }
-     * (uma ou mais declarações, cada uma inicia com Var)
-     */
     private void analisarListaDeclaracoes() {
         while (tokenAtual().getPadrao() == TipoToken.Var) {
             analisarDeclaracao();
         }
     }
 
-    /** Declaracao = VARIAVEL ':' TipoVar */
+    
     private void analisarDeclaracao() {
-        consumir(TipoToken.Var);             // variável (lexema minúsculo)
-        consumir(TipoToken.Delim);           // ':'
-        analisarTipoVar();                   // INT ou REAL
+        consumir(TipoToken.Var);             
+        consumir(TipoToken.Delim);           
+        analisarTipoVar();                   
     }
 
-    /** TipoVar = 'INT' | 'REAL' */
+    
     private void analisarTipoVar() {
         Token t = tokenAtual();
         if (t.getPadrao() == TipoToken.PCInt || t.getPadrao() == TipoToken.PCReal) {
@@ -102,19 +89,14 @@ public class AnalisadorSintatico {
         }
     }
 
-    // === Comandos ===
 
-    /**
-     * ListaComandos = { Comando }
-     * Cada comando começa com Var, LER, IMPRIMIR, SE, ENQTO ou INI
-     */
     private void analisarListaComandos() {
         while (ehInicioComando(tokenAtual())) {
             analisarComando();
         }
     }
 
-    /** Identifica início de comando pelo tipo do token atual */
+    
     private boolean ehInicioComando(Token token) {
         return switch (token.getPadrao()) {
             case Var, PCLer, PCImprimir, PCSe, PCEnqto, PCIni -> true;
@@ -122,7 +104,7 @@ public class AnalisadorSintatico {
         };
     }
 
-    /** Comando = Atribuicao | Entrada | Saida | Condicao | Repeticao | SubAlgoritmo */
+   
     private void analisarComando() {
         switch (tokenAtual().getPadrao()) {
             case Var        -> analisarComandoAtribuicao();
@@ -135,20 +117,20 @@ public class AnalisadorSintatico {
         }
     }
 
-    /** ComandoAtribuicao = VARIAVEL ':=' ExpressaoAritmetica */
+    
     private void analisarComandoAtribuicao() {
         consumir(TipoToken.Var);
-        consumir(TipoToken.Atrib);           // ':='
+        consumir(TipoToken.Atrib);           
         analisarExpressaoAritmetica();
     }
 
-    /** ComandoEntrada = 'LER' VARIAVEL */
+  
     private void analisarComandoEntrada() {
         consumir(TipoToken.PCLer);
         consumir(TipoToken.Var);
     }
 
-    /** ComandoSaida = 'IMPRIMIR' (VARIAVEL | CADEIA) */
+
     private void analisarComandoSaida() {
         consumir(TipoToken.PCImprimir);
         Token t = tokenAtual();
@@ -159,10 +141,7 @@ public class AnalisadorSintatico {
         }
     }
 
-    /**
-     * ComandoCondicao = 'SE' ExpressaoRelacional 
-     *                   'ENTAO' Comando [ 'SENAO' Comando ]
-     */
+ 
     private void analisarComandoCondicao() {
         consumir(TipoToken.PCSe);
         analisarExpressaoRelacional();
@@ -175,25 +154,21 @@ public class AnalisadorSintatico {
         }
     }
 
-    /** ComandoRepeticao = 'ENQTO' ExpressaoRelacional Comando */
+    
     private void analisarComandoRepeticao() {
         consumir(TipoToken.PCEnqto);
         analisarExpressaoRelacional();
         analisarComando();
     }
 
-    /** SubAlgoritmo = 'INI' ListaComandos 'FIM' */
+   
     private void analisarSubAlgoritmo() {
         consumir(TipoToken.PCIni);
         analisarListaComandos();
         consumir(TipoToken.PCFim);
     }
 
-    // === Expressões Aritméticas ===
-
-    /**
-     * ExpressaoAritmetica = TermoAritmetico { ('+'|'-') TermoAritmetico }
-     */
+ 
     private void analisarExpressaoAritmetica() {
         analisarTermoAritmetico();
         while (tokenAtual().getPadrao() == TipoToken.OpAritSoma ||
@@ -203,9 +178,6 @@ public class AnalisadorSintatico {
         }
     }
 
-    /**
-     * TermoAritmetico = FatorAritmetico { ('*'|'/') FatorAritmetico }
-     */
     private void analisarTermoAritmetico() {
         analisarFatorAritmetico();
         while (tokenAtual().getPadrao() == TipoToken.OpAritMult ||
@@ -215,9 +187,7 @@ public class AnalisadorSintatico {
         }
     }
 
-    /**
-     * FatorAritmetico = NUMINT | NUMREAL | VARIAVEL | '(' ExpressaoAritmetica ')'
-     */
+ 
     private void analisarFatorAritmetico() {
         Token t = tokenAtual();
         switch (t.getPadrao()) {
@@ -231,11 +201,7 @@ public class AnalisadorSintatico {
         }
     }
 
-    // === Expressões Relacionais ===
-
-    /**
-     * ExpressaoRelacional = TermoRelacional { ('E'|'OU') TermoRelacional }
-     */
+ 
     private void analisarExpressaoRelacional() {
         analisarTermoRelacional();
         while (tokenAtual().getPadrao() == TipoToken.OpBoolE ||
@@ -245,10 +211,7 @@ public class AnalisadorSintatico {
         }
     }
 
-    /**
-     * TermoRelacional = '(' ExpressaoRelacional ')' 
-     *                  | ExpressaoAritmetica OP_REL ExpressaoAritmetica
-     */
+ 
     private void analisarTermoRelacional() {
         if (tokenAtual().getPadrao() == TipoToken.AbrePar) {
             consumir(TipoToken.AbrePar);
@@ -265,7 +228,7 @@ public class AnalisadorSintatico {
         }
     }
 
-    /** Verifica se um TipoToken é um operador relacional */
+    
     private boolean ehOperadorRelacional(TipoToken tipo) {
         return switch (tipo) {
             case OpRelMenor, OpRelMenorIgual,
