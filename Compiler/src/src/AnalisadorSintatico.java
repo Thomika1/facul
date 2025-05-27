@@ -14,18 +14,27 @@ public class AnalisadorSintatico {
      //Retorna o token atual; se ultrapassar o fim, retorna um token EOF. 
     private Token tokenAtual() {
         if (posicaoAtual >= tokens.size()) {
-            // Token artificial de fim de arquivo
             return new Token("EOF", TipoToken.EOF, -1);
         }
-        return tokens.get(posicaoAtual);
+        
+        Token atual = tokens.get(posicaoAtual);
+        verificarErroLexico(atual);  // Verifica se é um token de erro
+        return atual;
     }
 
+    private void verificarErroLexico(Token token) {
+        if (token.getPadrao() == TipoToken.ERROR) {
+            erro("Erro léxico encontrado: " + token.getLexema(), token);
+        }
+    }
     
     // Consome um token do tipo esperado; 
     // caso contrário, lança excecao de erro sintatico.
  
     private void consumir(TipoToken tipoEsperado) {
         Token atual = tokenAtual();
+        verificarErroLexico(atual);  
+        
         if (atual.getPadrao() == tipoEsperado) {
             posicaoAtual++;
         } else {
@@ -35,8 +44,9 @@ public class AnalisadorSintatico {
     
     // func para formatar erro
     private void erro(String msg, Token token) {
-        throw new RuntimeException("Erro sintático na linha " 
-                + token.getLineNumber() + ": " + msg);
+        String tipoErro = (token.getPadrao() == TipoToken.ERROR) ? "Léxico" : "Sintático";
+        throw new RuntimeException("Erro " + tipoErro + " na linha " 
+                + token.getLineNumber() + ": " + msg + " [" + token.getLexema() + "]");
     }
 
     // Verifica o fim da lista
