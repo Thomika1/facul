@@ -10,10 +10,8 @@ public class AnalisadorSintatico {
         this.tokens = tokens;
         this.posicaoAtual = 0;
     }
-
-    /** 
-     * Retorna o token atual; se ultrapassar o fim, retorna um token EOF.
-     */
+     
+     //Retorna o token atual; se ultrapassar o fim, retorna um token EOF. 
     private Token tokenAtual() {
         if (posicaoAtual >= tokens.size()) {
             // Token artificial de fim de arquivo
