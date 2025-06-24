@@ -1,4 +1,4 @@
-grammar Gythlang;
+grammar GyhLang;
 
 prog: ':' 'DEC' listaDeclaracoes ':' 'PROG' listaComandos;
 
