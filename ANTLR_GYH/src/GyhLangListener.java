@@ -1,4 +1,7 @@
 // Generated from GyhLang.g4 by ANTLR 4.7.2
+
+    import java.util.ArrayList; // Você pode não precisar desta importação para apenas contadores, mas é um bom lugar para colocá-la.
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -7,15 +10,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface GyhLangListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link GyhLangParser#prog}.
+	 * Enter a parse tree produced by {@link GyhLangParser#programa}.
 	 * @param ctx the parse tree
 	 */
-	void enterProg(GyhLangParser.ProgContext ctx);
+	void enterPrograma(GyhLangParser.ProgramaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GyhLangParser#prog}.
+	 * Exit a parse tree produced by {@link GyhLangParser#programa}.
 	 * @param ctx the parse tree
 	 */
-	void exitProg(GyhLangParser.ProgContext ctx);
+	void exitPrograma(GyhLangParser.ProgramaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GyhLangParser#listaDeclaracoes}.
 	 * @param ctx the parse tree

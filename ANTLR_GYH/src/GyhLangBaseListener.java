@@ -1,5 +1,8 @@
 // Generated from GyhLang.g4 by ANTLR 4.7.2
 
+    import java.util.ArrayList; // Você pode não precisar desta importação para apenas contadores, mas é um bom lugar para colocá-la.
+
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -15,13 +18,13 @@ public class GyhLangBaseListener implements GyhLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterProg(GyhLangParser.ProgContext ctx) { }
+	@Override public void enterPrograma(GyhLangParser.ProgramaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitProg(GyhLangParser.ProgContext ctx) { }
+	@Override public void exitPrograma(GyhLangParser.ProgramaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

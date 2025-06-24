@@ -1,4 +1,7 @@
 // Generated from GyhLang.g4 by ANTLR 4.7.2
+
+    import java.util.ArrayList; // Você pode não precisar desta importação para apenas contadores, mas é um bom lugar para colocá-la.
+
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -89,6 +92,17 @@ public class GyhLangLexer extends Lexer {
 	public Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
+
+
+	    // Contadores para os diferentes tipos de elementos do programa
+	    private int qtdDecl = 0;
+	    private int qtdCmd = 0;
+	    private int qtdAtrib = 0;
+	    private int qtdEntrada = 0;
+	    private int qtdSaida = 0;
+	    private int qtdCond = 0;
+	    private int qtdRept = 0;
+	    private int qtdFunc = 0;
 
 
 	public GyhLangLexer(CharStream input) {

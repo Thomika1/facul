@@ -1,4 +1,7 @@
 // Generated from GyhLang.g4 by ANTLR 4.7.2
+
+    import java.util.ArrayList; // Você pode não precisar desta importação para apenas contadores, mas é um bom lugar para colocá-la.
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -22,7 +25,7 @@ public class GyhLangParser extends Parser {
 		ATRIB=25, DELIM=26, PONTO_VIRGULA=27, ABRE_PAR=28, FECHA_PAR=29, WS=30, 
 		COMENTARIO=31;
 	public static final int
-		RULE_prog = 0, RULE_listaDeclaracoes = 1, RULE_declaracao = 2, RULE_tipoVar = 3, 
+		RULE_programa = 0, RULE_listaDeclaracoes = 1, RULE_declaracao = 2, RULE_tipoVar = 3, 
 		RULE_expressaoAritmetica = 4, RULE_termoAritmetico = 5, RULE_fatorAritmetico = 6, 
 		RULE_expressaoRelacional = 7, RULE_termoRelacional = 8, RULE_listaComandos = 9, 
 		RULE_comando = 10, RULE_comandoAtribuicao = 11, RULE_comandoEntrada = 12, 
@@ -30,7 +33,7 @@ public class GyhLangParser extends Parser {
 		RULE_subAlgoritmo = 16;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"prog", "listaDeclaracoes", "declaracao", "tipoVar", "expressaoAritmetica", 
+			"programa", "listaDeclaracoes", "declaracao", "tipoVar", "expressaoAritmetica", 
 			"termoAritmetico", "fatorAritmetico", "expressaoRelacional", "termoRelacional", 
 			"listaComandos", "comando", "comandoAtribuicao", "comandoEntrada", "comandoSaida", 
 			"comandoCondicao", "comandoRepeticao", "subAlgoritmo"
@@ -101,12 +104,23 @@ public class GyhLangParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
+
+	    // Contadores para os diferentes tipos de elementos do programa
+	    private int qtdDecl = 0;
+	    private int qtdCmd = 0;
+	    private int qtdAtrib = 0;
+	    private int qtdEntrada = 0;
+	    private int qtdSaida = 0;
+	    private int qtdCond = 0;
+	    private int qtdRept = 0;
+	    private int qtdFunc = 0;
+
 	public GyhLangParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
-	public static class ProgContext extends ParserRuleContext {
+	public static class ProgramaContext extends ParserRuleContext {
 		public List<TerminalNode> DELIM() { return getTokens(GyhLangParser.DELIM); }
 		public TerminalNode DELIM(int i) {
 			return getToken(GyhLangParser.DELIM, i);
@@ -117,23 +131,23 @@ public class GyhLangParser extends Parser {
 		public ListaComandosContext listaComandos() {
 			return getRuleContext(ListaComandosContext.class,0);
 		}
-		public ProgContext(ParserRuleContext parent, int invokingState) {
+		public ProgramaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_prog; }
+		@Override public int getRuleIndex() { return RULE_programa; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GyhLangListener ) ((GyhLangListener)listener).enterProg(this);
+			if ( listener instanceof GyhLangListener ) ((GyhLangListener)listener).enterPrograma(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GyhLangListener ) ((GyhLangListener)listener).exitProg(this);
+			if ( listener instanceof GyhLangListener ) ((GyhLangListener)listener).exitPrograma(this);
 		}
 	}
 
-	public final ProgContext prog() throws RecognitionException {
-		ProgContext _localctx = new ProgContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_prog);
+	public final ProgramaContext programa() throws RecognitionException {
+		ProgramaContext _localctx = new ProgramaContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_programa);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -149,6 +163,19 @@ public class GyhLangParser extends Parser {
 			match(T__1);
 			setState(39);
 			listaComandos();
+
+			          // Ações semânticas executadas após a análise completa do programa
+			          System.out.println("\n--- Resumo da Análise ---");
+			          System.out.println("  Declarações: " + qtdDecl);
+			          System.out.println("  Total de Comandos: " + qtdCmd);
+			          System.out.println("    - Atribuições: " + qtdAtrib);
+			          System.out.println("    - Entradas: " + qtdEntrada);
+			          System.out.println("    - Saídas: " + qtdSaida);
+			          System.out.println("    - Condições (SE): " + qtdCond);
+			          System.out.println("    - Repetições (ENQTO): " + qtdRept);
+			          System.out.println("    - Funcao (INI/FIM): " + qtdFunc);
+			          System.out.println("-------------------------\n");
+			      
 			}
 		}
 		catch (RecognitionException re) {
@@ -168,10 +195,6 @@ public class GyhLangParser extends Parser {
 		}
 		public DeclaracaoContext declaracao(int i) {
 			return getRuleContext(DeclaracaoContext.class,i);
-		}
-		public List<TerminalNode> PONTO_VIRGULA() { return getTokens(GyhLangParser.PONTO_VIRGULA); }
-		public TerminalNode PONTO_VIRGULA(int i) {
-			return getToken(GyhLangParser.PONTO_VIRGULA, i);
 		}
 		public ListaDeclaracoesContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -194,24 +217,21 @@ public class GyhLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(41);
-			declaracao();
-			setState(46);
+			setState(45); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==PONTO_VIRGULA) {
+			do {
 				{
 				{
 				setState(42);
-				match(PONTO_VIRGULA);
-				setState(43);
 				declaracao();
+				 qtdDecl++; 
 				}
 				}
-				setState(48);
+				setState(47); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
+			} while ( _la==VARIAVEL );
 			}
 		}
 		catch (RecognitionException re) {
@@ -675,10 +695,6 @@ public class GyhLangParser extends Parser {
 		public ComandoContext comando(int i) {
 			return getRuleContext(ComandoContext.class,i);
 		}
-		public List<TerminalNode> PONTO_VIRGULA() { return getTokens(GyhLangParser.PONTO_VIRGULA); }
-		public TerminalNode PONTO_VIRGULA(int i) {
-			return getToken(GyhLangParser.PONTO_VIRGULA, i);
-		}
 		public ListaComandosContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -700,24 +716,21 @@ public class GyhLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(99);
-			comando();
-			setState(104);
+			setState(102); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==PONTO_VIRGULA) {
+			do {
 				{
 				{
-				setState(100);
-				match(PONTO_VIRGULA);
-				setState(101);
+				setState(99);
 				comando();
+				 qtdCmd++; 
 				}
 				}
-				setState(106);
+				setState(104); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__15) | (1L << T__16) | (1L << VARIAVEL))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -768,48 +781,48 @@ public class GyhLangParser extends Parser {
 		ComandoContext _localctx = new ComandoContext(_ctx, getState());
 		enterRule(_localctx, 20, RULE_comando);
 		try {
-			setState(113);
+			setState(112);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case VARIAVEL:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(107);
+				setState(106);
 				comandoAtribuicao();
 				}
 				break;
 			case T__10:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(108);
+				setState(107);
 				comandoEntrada();
 				}
 				break;
 			case T__11:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(109);
+				setState(108);
 				comandoSaida();
 				}
 				break;
 			case T__12:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(110);
+				setState(109);
 				comandoCondicao();
 				}
 				break;
 			case T__15:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(111);
+				setState(110);
 				comandoRepeticao();
 				}
 				break;
 			case T__16:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(112);
+				setState(111);
 				subAlgoritmo();
 				}
 				break;
@@ -854,12 +867,13 @@ public class GyhLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(115);
+			setState(114);
 			match(VARIAVEL);
-			setState(116);
+			setState(115);
 			match(ATRIB);
-			setState(117);
+			setState(116);
 			expressaoAritmetica();
+			 qtdAtrib++; 
 			}
 		}
 		catch (RecognitionException re) {
@@ -899,6 +913,7 @@ public class GyhLangParser extends Parser {
 			match(T__10);
 			setState(120);
 			match(VARIAVEL);
+			 qtdEntrada++; 
 			}
 		}
 		catch (RecognitionException re) {
@@ -936,9 +951,9 @@ public class GyhLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(122);
-			match(T__11);
 			setState(123);
+			match(T__11);
+			setState(124);
 			_la = _input.LA(1);
 			if ( !(_la==VARIAVEL || _la==CADEIA) ) {
 			_errHandler.recoverInline(this);
@@ -948,6 +963,7 @@ public class GyhLangParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
+			 qtdSaida++; 
 			}
 		}
 		catch (RecognitionException re) {
@@ -991,26 +1007,27 @@ public class GyhLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(125);
-			match(T__12);
-			setState(126);
-			expressaoRelacional();
 			setState(127);
-			match(T__13);
+			match(T__12);
 			setState(128);
+			expressaoRelacional();
+			setState(129);
+			match(T__13);
+			setState(130);
 			comando();
-			setState(131);
+			setState(133);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
-				setState(129);
+				setState(131);
 				match(T__14);
-				setState(130);
+				setState(132);
 				comando();
 				}
 				break;
 			}
+			 qtdCond++; 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1051,12 +1068,13 @@ public class GyhLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(133);
+			setState(137);
 			match(T__15);
-			setState(134);
+			setState(138);
 			expressaoRelacional();
-			setState(135);
+			setState(139);
 			comando();
+			 qtdRept++; 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1094,12 +1112,13 @@ public class GyhLangParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(137);
+			setState(142);
 			match(T__16);
-			setState(138);
+			setState(143);
 			listaComandos();
-			setState(139);
+			setState(144);
 			match(T__17);
+			 qtdFunc++; 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1114,43 +1133,45 @@ public class GyhLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3!\u0090\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3!\u0096\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\3\3\3\3\3\7\3/\n\3\f\3\16\3\62\13\3\3\4"+
-		"\3\4\3\4\3\4\3\5\3\5\3\6\3\6\3\6\7\6=\n\6\f\6\16\6@\13\6\3\7\3\7\3\7\7"+
-		"\7E\n\7\f\7\16\7H\13\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bQ\n\b\3\t\3\t\3"+
-		"\t\3\t\7\tW\n\t\f\t\16\tZ\13\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\nd\n"+
-		"\n\3\13\3\13\3\13\7\13i\n\13\f\13\16\13l\13\13\3\f\3\f\3\f\3\f\3\f\3\f"+
-		"\5\ft\n\f\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3\17\3\20\3\20\3\20"+
-		"\3\20\3\20\3\20\5\20\u0086\n\20\3\21\3\21\3\21\3\21\3\22\3\22\3\22\3\22"+
-		"\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\6\3\2\5\6\3\2"+
-		"\7\b\3\2\t\n\4\2\27\27\32\32\2\u008e\2$\3\2\2\2\4+\3\2\2\2\6\63\3\2\2"+
-		"\2\b\67\3\2\2\2\n9\3\2\2\2\fA\3\2\2\2\16P\3\2\2\2\20R\3\2\2\2\22c\3\2"+
-		"\2\2\24e\3\2\2\2\26s\3\2\2\2\30u\3\2\2\2\32y\3\2\2\2\34|\3\2\2\2\36\177"+
-		"\3\2\2\2 \u0087\3\2\2\2\"\u008b\3\2\2\2$%\7\34\2\2%&\7\3\2\2&\'\5\4\3"+
-		"\2\'(\7\34\2\2()\7\4\2\2)*\5\24\13\2*\3\3\2\2\2+\60\5\6\4\2,-\7\35\2\2"+
-		"-/\5\6\4\2.,\3\2\2\2/\62\3\2\2\2\60.\3\2\2\2\60\61\3\2\2\2\61\5\3\2\2"+
-		"\2\62\60\3\2\2\2\63\64\7\27\2\2\64\65\7\34\2\2\65\66\5\b\5\2\66\7\3\2"+
-		"\2\2\678\t\2\2\28\t\3\2\2\29>\5\f\7\2:;\t\3\2\2;=\5\f\7\2<:\3\2\2\2=@"+
-		"\3\2\2\2><\3\2\2\2>?\3\2\2\2?\13\3\2\2\2@>\3\2\2\2AF\5\16\b\2BC\t\4\2"+
-		"\2CE\5\16\b\2DB\3\2\2\2EH\3\2\2\2FD\3\2\2\2FG\3\2\2\2G\r\3\2\2\2HF\3\2"+
-		"\2\2IQ\7\30\2\2JQ\7\31\2\2KQ\7\27\2\2LM\7\36\2\2MN\5\n\6\2NO\7\37\2\2"+
-		"OQ\3\2\2\2PI\3\2\2\2PJ\3\2\2\2PK\3\2\2\2PL\3\2\2\2Q\17\3\2\2\2RX\5\22"+
-		"\n\2SW\7\13\2\2TU\7\f\2\2UW\5\22\n\2VS\3\2\2\2VT\3\2\2\2WZ\3\2\2\2XV\3"+
-		"\2\2\2XY\3\2\2\2Y\21\3\2\2\2ZX\3\2\2\2[\\\5\n\6\2\\]\7\26\2\2]^\5\n\6"+
-		"\2^d\3\2\2\2_`\7\36\2\2`a\5\20\t\2ab\7\37\2\2bd\3\2\2\2c[\3\2\2\2c_\3"+
-		"\2\2\2d\23\3\2\2\2ej\5\26\f\2fg\7\35\2\2gi\5\26\f\2hf\3\2\2\2il\3\2\2"+
-		"\2jh\3\2\2\2jk\3\2\2\2k\25\3\2\2\2lj\3\2\2\2mt\5\30\r\2nt\5\32\16\2ot"+
-		"\5\34\17\2pt\5\36\20\2qt\5 \21\2rt\5\"\22\2sm\3\2\2\2sn\3\2\2\2so\3\2"+
-		"\2\2sp\3\2\2\2sq\3\2\2\2sr\3\2\2\2t\27\3\2\2\2uv\7\27\2\2vw\7\33\2\2w"+
-		"x\5\n\6\2x\31\3\2\2\2yz\7\r\2\2z{\7\27\2\2{\33\3\2\2\2|}\7\16\2\2}~\t"+
-		"\5\2\2~\35\3\2\2\2\177\u0080\7\17\2\2\u0080\u0081\5\20\t\2\u0081\u0082"+
-		"\7\20\2\2\u0082\u0085\5\26\f\2\u0083\u0084\7\21\2\2\u0084\u0086\5\26\f"+
-		"\2\u0085\u0083\3\2\2\2\u0085\u0086\3\2\2\2\u0086\37\3\2\2\2\u0087\u0088"+
-		"\7\22\2\2\u0088\u0089\5\20\t\2\u0089\u008a\5\26\f\2\u008a!\3\2\2\2\u008b"+
-		"\u008c\7\23\2\2\u008c\u008d\5\24\13\2\u008d\u008e\7\24\2\2\u008e#\3\2"+
-		"\2\2\f\60>FPVXcjs\u0085";
+		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\3\3\3\3\3\6\3\60\n\3\r\3\16\3\61\3"+
+		"\4\3\4\3\4\3\4\3\5\3\5\3\6\3\6\3\6\7\6=\n\6\f\6\16\6@\13\6\3\7\3\7\3\7"+
+		"\7\7E\n\7\f\7\16\7H\13\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bQ\n\b\3\t\3\t"+
+		"\3\t\3\t\7\tW\n\t\f\t\16\tZ\13\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\nd"+
+		"\n\n\3\13\3\13\3\13\6\13i\n\13\r\13\16\13j\3\f\3\f\3\f\3\f\3\f\3\f\5\f"+
+		"s\n\f\3\r\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\20"+
+		"\3\20\3\20\3\20\3\20\3\20\5\20\u0088\n\20\3\20\3\20\3\21\3\21\3\21\3\21"+
+		"\3\21\3\22\3\22\3\22\3\22\3\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26"+
+		"\30\32\34\36 \"\2\6\3\2\5\6\3\2\7\b\3\2\t\n\4\2\27\27\32\32\2\u0094\2"+
+		"$\3\2\2\2\4/\3\2\2\2\6\63\3\2\2\2\b\67\3\2\2\2\n9\3\2\2\2\fA\3\2\2\2\16"+
+		"P\3\2\2\2\20R\3\2\2\2\22c\3\2\2\2\24h\3\2\2\2\26r\3\2\2\2\30t\3\2\2\2"+
+		"\32y\3\2\2\2\34}\3\2\2\2\36\u0081\3\2\2\2 \u008b\3\2\2\2\"\u0090\3\2\2"+
+		"\2$%\7\34\2\2%&\7\3\2\2&\'\5\4\3\2\'(\7\34\2\2()\7\4\2\2)*\5\24\13\2*"+
+		"+\b\2\1\2+\3\3\2\2\2,-\5\6\4\2-.\b\3\1\2.\60\3\2\2\2/,\3\2\2\2\60\61\3"+
+		"\2\2\2\61/\3\2\2\2\61\62\3\2\2\2\62\5\3\2\2\2\63\64\7\27\2\2\64\65\7\34"+
+		"\2\2\65\66\5\b\5\2\66\7\3\2\2\2\678\t\2\2\28\t\3\2\2\29>\5\f\7\2:;\t\3"+
+		"\2\2;=\5\f\7\2<:\3\2\2\2=@\3\2\2\2><\3\2\2\2>?\3\2\2\2?\13\3\2\2\2@>\3"+
+		"\2\2\2AF\5\16\b\2BC\t\4\2\2CE\5\16\b\2DB\3\2\2\2EH\3\2\2\2FD\3\2\2\2F"+
+		"G\3\2\2\2G\r\3\2\2\2HF\3\2\2\2IQ\7\30\2\2JQ\7\31\2\2KQ\7\27\2\2LM\7\36"+
+		"\2\2MN\5\n\6\2NO\7\37\2\2OQ\3\2\2\2PI\3\2\2\2PJ\3\2\2\2PK\3\2\2\2PL\3"+
+		"\2\2\2Q\17\3\2\2\2RX\5\22\n\2SW\7\13\2\2TU\7\f\2\2UW\5\22\n\2VS\3\2\2"+
+		"\2VT\3\2\2\2WZ\3\2\2\2XV\3\2\2\2XY\3\2\2\2Y\21\3\2\2\2ZX\3\2\2\2[\\\5"+
+		"\n\6\2\\]\7\26\2\2]^\5\n\6\2^d\3\2\2\2_`\7\36\2\2`a\5\20\t\2ab\7\37\2"+
+		"\2bd\3\2\2\2c[\3\2\2\2c_\3\2\2\2d\23\3\2\2\2ef\5\26\f\2fg\b\13\1\2gi\3"+
+		"\2\2\2he\3\2\2\2ij\3\2\2\2jh\3\2\2\2jk\3\2\2\2k\25\3\2\2\2ls\5\30\r\2"+
+		"ms\5\32\16\2ns\5\34\17\2os\5\36\20\2ps\5 \21\2qs\5\"\22\2rl\3\2\2\2rm"+
+		"\3\2\2\2rn\3\2\2\2ro\3\2\2\2rp\3\2\2\2rq\3\2\2\2s\27\3\2\2\2tu\7\27\2"+
+		"\2uv\7\33\2\2vw\5\n\6\2wx\b\r\1\2x\31\3\2\2\2yz\7\r\2\2z{\7\27\2\2{|\b"+
+		"\16\1\2|\33\3\2\2\2}~\7\16\2\2~\177\t\5\2\2\177\u0080\b\17\1\2\u0080\35"+
+		"\3\2\2\2\u0081\u0082\7\17\2\2\u0082\u0083\5\20\t\2\u0083\u0084\7\20\2"+
+		"\2\u0084\u0087\5\26\f\2\u0085\u0086\7\21\2\2\u0086\u0088\5\26\f\2\u0087"+
+		"\u0085\3\2\2\2\u0087\u0088\3\2\2\2\u0088\u0089\3\2\2\2\u0089\u008a\b\20"+
+		"\1\2\u008a\37\3\2\2\2\u008b\u008c\7\22\2\2\u008c\u008d\5\20\t\2\u008d"+
+		"\u008e\5\26\f\2\u008e\u008f\b\21\1\2\u008f!\3\2\2\2\u0090\u0091\7\23\2"+
+		"\2\u0091\u0092\5\24\13\2\u0092\u0093\7\24\2\2\u0093\u0094\b\22\1\2\u0094"+
+		"#\3\2\2\2\f\61>FPVXcjr\u0087";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
