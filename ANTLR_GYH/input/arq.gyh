@@ -17,7 +17,7 @@ SE num1 > num2 ENTAO
       num2 := num1
       num1 := aux
    FIM 
-SE num1 > num3 E num1 > 3 ENTAO
+SE num1 > num3 E num2 > 3 ENTAO
    INI
       aux := num3
       num3 := num1

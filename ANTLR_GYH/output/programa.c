@@ -17,7 +17,7 @@ int main() {
     num1 = (aux);
 }
     
- if (num1>num3&&num1>3) {
+ if (num1>num3&&num2>3) {
     aux = (num3);
     num3 = (num1);
     num1 = (aux);
