@@ -1,11 +1,10 @@
 grammar GyhLang;
 
 @header{
-    import java.util.ArrayList; // Você pode não precisar desta importação para apenas contadores, mas é um bom lugar para colocá-la.
+    import java.util.ArrayList;
 }
 
 @members {
-    // Contadores para os diferentes tipos de elementos do programa
     private int qtdDecl = 0;
     private int qtdCmd = 0;
     private int qtdAtrib = 0;
@@ -13,63 +12,134 @@ grammar GyhLang;
     private int qtdSaida = 0;
     private int qtdCond = 0;
     private int qtdRept = 0;
-    private int qtdFunc = 0;
+    private int qtdSubAlg = 0;
+    
+    private TabSimb tabela = new TabSimb();
+    private String _writeVar;
+    private ArrayList<Command> listCmd= new ArrayList<Command>();
+    private GyhProgram programa = new GyhProgram(tabela);
+    
+      public void generateCommand(){
+          programa.generateTarget();
+          	System.out.println("\n\n gerando codigo");
+          }
+    
 }
 
-programa
-    : DELIM 'DEC' listaDeclaracoes
-      DELIM 'PROG' listaComandos
-      {
-          // Ações semânticas executadas após a análise completa do programa
-          System.out.println("\n--- Resumo da Análise ---");
-          System.out.println("  Declarações: " + qtdDecl);
-          System.out.println("  Total de Comandos: " + qtdCmd);
-          System.out.println("    - Atribuições: " + qtdAtrib);
-          System.out.println("    - Entradas: " + qtdEntrada);
-          System.out.println("    - Saídas: " + qtdSaida);
-          System.out.println("    - Condições (SE): " + qtdCond);
-          System.out.println("    - Repetições (ENQTO): " + qtdRept);
-          System.out.println("    - Funcao (INI/FIM): " + qtdFunc);
-          System.out.println("-------------------------\n");
+// regras sintaticas
+programa 
+    : Delim 'DEC' listaDeclaracoes 
+      Delim 'PROG' listaComandos 
+      { 
+      	  System.out.println("\n ");
+          System.out.println("Declaracoes: " + qtdDecl);
+          System.out.println("Total de comando: " + qtdCmd);
+          System.out.println("   - Entradas: " + qtdEntrada);
+          System.out.println("   - Saidas: " + qtdSaida);
+          System.out.println("   - Repeticoes: " + qtdRept);
+          System.out.println("   - Atribuicoes: " + qtdAtrib);
+          System.out.println("   - Condicoes: " + qtdCond);
+          System.out.println("   - Funcoes: " + qtdSubAlg);
+          System.out.println("\n ");
+
       }
     ;
 
-listaDeclaracoes : (declaracao { qtdDecl++; })+; // Incrementa qtdDecl para cada declaração
-declaracao: VARIAVEL DELIM tipoVar;
+listaDeclaracoes : ( declaracao { qtdDecl++; } )* ;
+listaComandos : ( comando { qtdCmd++; } )* ;
+
+tabelaDeclaracoes: listaDeclaracoes | ; 
+
+declaracao: Var Delim tipoVar;
 tipoVar: 'INT' | 'REAL';
 
-expressaoAritmetica: termoAritmetico (('+'|'-') termoAritmetico)*;
-termoAritmetico: fatorAritmetico (('*'|'/') fatorAritmetico)*;
-fatorAritmetico: NUMINT | NUMREAL | VARIAVEL | '(' expressaoAritmetica ')';
+expressaoAritmetica: termoAritmetico expressaoAritmeticaAux;
+expressaoAritmeticaAux: '+' termoAritmetico expressaoAritmeticaAux
+                      | '-' termoAritmetico expressaoAritmeticaAux
+                      | ; 
 
-expressaoRelacional: termoRelacional ('E'|'OU' termoRelacional)*;
-termoRelacional: expressaoAritmetica OpRel expressaoAritmetica | '(' expressaoRelacional ')';
+termoAritmetico: fatorAritmetico termoAritmeticoAux;
+termoAritmeticoAux: '*' fatorAritmetico termoAritmeticoAux
+                   | '/' fatorAritmetico termoAritmeticoAux
+                   | ; 
 
-listaComandos : (comando { qtdCmd++; })+ ; // Incrementa qtdCmd para cada comando
+fatorAritmetico: NumInt | NumReal | Var | AbrePar expressaoAritmetica FechaPar;
+
+expressaoRelacional: termoRelacional expressaoRelacionalAux;
+expressaoRelacionalAux: operadorBooleano termoRelacional expressaoRelacionalAux
+                       | ; 
+
+termoRelacional: expressaoAritmetica OpRel expressaoAritmetica 
+               | AbrePar expressaoRelacional FechaPar;
+
+operadorBooleano: OpBoolE | OpBoolOu;
+
+tabelaComandos: listaComandos | ;
+
 comando: comandoAtribuicao | comandoEntrada | comandoSaida | comandoCondicao | comandoRepeticao | subAlgoritmo;
 
-comandoAtribuicao: VARIAVEL ATRIB expressaoAritmetica { qtdAtrib++; }; // Incrementa qtdAtrib
-comandoEntrada: 'LER' VARIAVEL { qtdEntrada++; }; // Incrementa qtdEntrada
-comandoSaida: 'IMPRIMIR' (VARIAVEL|CADEIA) { qtdSaida++; }; // Incrementa qtdSaida
-comandoCondicao: 'SE' expressaoRelacional 'ENTAO' comando ('SENAO' comando)? { qtdCond++; }; // Incrementa qtdCond
-comandoRepeticao: 'ENQTO' expressaoRelacional comando { qtdRept++; }; // Incrementa qtdRept
-subAlgoritmo: 'INI' listaComandos 'FIM' { qtdFunc++; }; // Incrementa qtdSubAlg
 
-// --- Tokens e Palavras-chave ---
-PC: 'DEC' | 'PROG' | 'INT' | 'REAL' | 'LER' | 'IMPRIMIR' | 'SE' | 'ENTAO' | 'SENAO' | 'ENQTO' | 'INI' | 'FIM';
+comandoAtribuicao: Var Atrib expressaoAritmetica { 
+    qtdAtrib++; 
+};
+comandoEntrada: 'LER' Var { 
+    qtdEntrada++; 
+};
+comandoSaidaAux: Var | Cadeia;
+comandoSaida: 'IMPRIMIR' Espaco? comandoSaidaAux { 
+    qtdSaida++; 
+    
+};
+comandoCondicao: 'SE' expressaoRelacional 'ENTAO' comando comandoCondicaoAux { 
+    qtdCond++; 
+};
+comandoCondicaoAux: 'SENAO' comando | ; // ε
+comandoRepeticao: 'ENQTO' expressaoRelacional comando { 
+    qtdRept++; 
+};
+subAlgoritmo: 'INI' listaComandos 'FIM' { 
+    qtdSubAlg++; 
+};
+
+// regras lexicas
+
+// palavras-chave
+PC: 'DEC' | 'PROG' | 'INT' | 'REAL' | 'LER' | 'IMPRIMIR' | 'SE' | 'SENAO' | 'ENTAO' | 'ENQTO' | 'INI' | 'FIM';
+
+// operadores aritméticos
+OpArit: '*' | '/' | '+' | '-';
+
+// operadores relacionais
 OpRel: '<' | '<=' | '>' | '>=' | '==' | '!=';
-VARIAVEL: [a-zA-Z_][a-zA-Z0-9_]*;
-NUMINT: [0-9]+;
-NUMREAL: [0-9]+ '.' [0-9]+;
-CADEIA: '"' .*? '"';
 
-// --- Operadores e Símbolos ---
-ATRIB: ':=';
-DELIM: ':';
-PONTO_VIRGULA: ';'; // Não usado nas regras de parsing, mas definido como token
-ABRE_PAR: '(';
-FECHA_PAR: ')';
+// operadores booleanos
+OpBoolE: 'E';
+OpBoolOu: 'OU';
 
-// --- Ignorar ---
-WS: [ \t\r\n]+ -> skip;
-COMENTARIO: '#' ~[\r\n]* -> skip;
+// delimitadores
+Delim: ':' ;
+
+// atribuicao
+Atrib: ':=';
+
+// parenteses
+AbrePar: '(';
+FechaPar: ')';
+
+// variaveis 
+Var: [a-z] ([a-z] | [A-Z] | [0-9])*;
+
+// numeros inteiros
+NumInt: [0-9]+;
+
+// numeros reais
+NumReal: [0-9]+ '.' [0-9]+;
+
+// cadeia de caracteres
+Cadeia: '"' (~["\r\n])* '"';
+
+// espaços em branco 
+Espaco: (' ' | '\n' | '\r' | '\t') -> skip;
+
+// comentarios 
+Coment: '#' ~[\r\n]* -> skip;

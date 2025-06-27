@@ -1,6 +1,6 @@
 // Generated from GyhLang.g4 by ANTLR 4.7.2
 
-    import java.util.ArrayList; // Você pode não precisar desta importação para apenas contadores, mas é um bom lugar para colocá-la.
+    import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -29,6 +29,26 @@ public interface GyhLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitListaDeclaracoes(GyhLangParser.ListaDeclaracoesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GyhLangParser#listaComandos}.
+	 * @param ctx the parse tree
+	 */
+	void enterListaComandos(GyhLangParser.ListaComandosContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GyhLangParser#listaComandos}.
+	 * @param ctx the parse tree
+	 */
+	void exitListaComandos(GyhLangParser.ListaComandosContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GyhLangParser#tabelaDeclaracoes}.
+	 * @param ctx the parse tree
+	 */
+	void enterTabelaDeclaracoes(GyhLangParser.TabelaDeclaracoesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GyhLangParser#tabelaDeclaracoes}.
+	 * @param ctx the parse tree
+	 */
+	void exitTabelaDeclaracoes(GyhLangParser.TabelaDeclaracoesContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GyhLangParser#declaracao}.
 	 * @param ctx the parse tree
@@ -60,6 +80,16 @@ public interface GyhLangListener extends ParseTreeListener {
 	 */
 	void exitExpressaoAritmetica(GyhLangParser.ExpressaoAritmeticaContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GyhLangParser#expressaoAritmeticaAux}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressaoAritmeticaAux(GyhLangParser.ExpressaoAritmeticaAuxContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GyhLangParser#expressaoAritmeticaAux}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressaoAritmeticaAux(GyhLangParser.ExpressaoAritmeticaAuxContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GyhLangParser#termoAritmetico}.
 	 * @param ctx the parse tree
 	 */
@@ -69,6 +99,16 @@ public interface GyhLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTermoAritmetico(GyhLangParser.TermoAritmeticoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GyhLangParser#termoAritmeticoAux}.
+	 * @param ctx the parse tree
+	 */
+	void enterTermoAritmeticoAux(GyhLangParser.TermoAritmeticoAuxContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GyhLangParser#termoAritmeticoAux}.
+	 * @param ctx the parse tree
+	 */
+	void exitTermoAritmeticoAux(GyhLangParser.TermoAritmeticoAuxContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GyhLangParser#fatorAritmetico}.
 	 * @param ctx the parse tree
@@ -90,6 +130,16 @@ public interface GyhLangListener extends ParseTreeListener {
 	 */
 	void exitExpressaoRelacional(GyhLangParser.ExpressaoRelacionalContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GyhLangParser#expressaoRelacionalAux}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressaoRelacionalAux(GyhLangParser.ExpressaoRelacionalAuxContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GyhLangParser#expressaoRelacionalAux}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressaoRelacionalAux(GyhLangParser.ExpressaoRelacionalAuxContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GyhLangParser#termoRelacional}.
 	 * @param ctx the parse tree
 	 */
@@ -100,15 +150,25 @@ public interface GyhLangListener extends ParseTreeListener {
 	 */
 	void exitTermoRelacional(GyhLangParser.TermoRelacionalContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GyhLangParser#listaComandos}.
+	 * Enter a parse tree produced by {@link GyhLangParser#operadorBooleano}.
 	 * @param ctx the parse tree
 	 */
-	void enterListaComandos(GyhLangParser.ListaComandosContext ctx);
+	void enterOperadorBooleano(GyhLangParser.OperadorBooleanoContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GyhLangParser#listaComandos}.
+	 * Exit a parse tree produced by {@link GyhLangParser#operadorBooleano}.
 	 * @param ctx the parse tree
 	 */
-	void exitListaComandos(GyhLangParser.ListaComandosContext ctx);
+	void exitOperadorBooleano(GyhLangParser.OperadorBooleanoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GyhLangParser#tabelaComandos}.
+	 * @param ctx the parse tree
+	 */
+	void enterTabelaComandos(GyhLangParser.TabelaComandosContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GyhLangParser#tabelaComandos}.
+	 * @param ctx the parse tree
+	 */
+	void exitTabelaComandos(GyhLangParser.TabelaComandosContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GyhLangParser#comando}.
 	 * @param ctx the parse tree
@@ -140,6 +200,16 @@ public interface GyhLangListener extends ParseTreeListener {
 	 */
 	void exitComandoEntrada(GyhLangParser.ComandoEntradaContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GyhLangParser#comandoSaidaAux}.
+	 * @param ctx the parse tree
+	 */
+	void enterComandoSaidaAux(GyhLangParser.ComandoSaidaAuxContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GyhLangParser#comandoSaidaAux}.
+	 * @param ctx the parse tree
+	 */
+	void exitComandoSaidaAux(GyhLangParser.ComandoSaidaAuxContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GyhLangParser#comandoSaida}.
 	 * @param ctx the parse tree
 	 */
@@ -159,6 +229,16 @@ public interface GyhLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitComandoCondicao(GyhLangParser.ComandoCondicaoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GyhLangParser#comandoCondicaoAux}.
+	 * @param ctx the parse tree
+	 */
+	void enterComandoCondicaoAux(GyhLangParser.ComandoCondicaoAuxContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GyhLangParser#comandoCondicaoAux}.
+	 * @param ctx the parse tree
+	 */
+	void exitComandoCondicaoAux(GyhLangParser.ComandoCondicaoAuxContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GyhLangParser#comandoRepeticao}.
 	 * @param ctx the parse tree

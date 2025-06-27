@@ -1,6 +1,6 @@
 // Generated from GyhLang.g4 by ANTLR 4.7.2
 
-    import java.util.ArrayList; // Você pode não precisar desta importação para apenas contadores, mas é um bom lugar para colocá-la.
+    import java.util.ArrayList;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -42,6 +42,30 @@ public class GyhLangBaseListener implements GyhLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterListaComandos(GyhLangParser.ListaComandosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitListaComandos(GyhLangParser.ListaComandosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTabelaDeclaracoes(GyhLangParser.TabelaDeclaracoesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTabelaDeclaracoes(GyhLangParser.TabelaDeclaracoesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDeclaracao(GyhLangParser.DeclaracaoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -78,6 +102,18 @@ public class GyhLangBaseListener implements GyhLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExpressaoAritmeticaAux(GyhLangParser.ExpressaoAritmeticaAuxContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressaoAritmeticaAux(GyhLangParser.ExpressaoAritmeticaAuxContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTermoAritmetico(GyhLangParser.TermoAritmeticoContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -85,6 +121,18 @@ public class GyhLangBaseListener implements GyhLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTermoAritmetico(GyhLangParser.TermoAritmeticoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTermoAritmeticoAux(GyhLangParser.TermoAritmeticoAuxContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTermoAritmeticoAux(GyhLangParser.TermoAritmeticoAuxContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -114,6 +162,18 @@ public class GyhLangBaseListener implements GyhLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExpressaoRelacionalAux(GyhLangParser.ExpressaoRelacionalAuxContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressaoRelacionalAux(GyhLangParser.ExpressaoRelacionalAuxContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTermoRelacional(GyhLangParser.TermoRelacionalContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -126,13 +186,25 @@ public class GyhLangBaseListener implements GyhLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterListaComandos(GyhLangParser.ListaComandosContext ctx) { }
+	@Override public void enterOperadorBooleano(GyhLangParser.OperadorBooleanoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitListaComandos(GyhLangParser.ListaComandosContext ctx) { }
+	@Override public void exitOperadorBooleano(GyhLangParser.OperadorBooleanoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTabelaComandos(GyhLangParser.TabelaComandosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTabelaComandos(GyhLangParser.TabelaComandosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -174,6 +246,18 @@ public class GyhLangBaseListener implements GyhLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterComandoSaidaAux(GyhLangParser.ComandoSaidaAuxContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitComandoSaidaAux(GyhLangParser.ComandoSaidaAuxContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterComandoSaida(GyhLangParser.ComandoSaidaContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -193,6 +277,18 @@ public class GyhLangBaseListener implements GyhLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitComandoCondicao(GyhLangParser.ComandoCondicaoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterComandoCondicaoAux(GyhLangParser.ComandoCondicaoAuxContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitComandoCondicaoAux(GyhLangParser.ComandoCondicaoAuxContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
