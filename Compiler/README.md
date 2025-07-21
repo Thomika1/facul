@@ -12,9 +12,7 @@
   - Gramática LL(1) implementada manualmente
   - Pilha de estados para controle
 
-- **Análise Semântica**
-  - Tabela de símbolos hierárquica
-  - Verificação de tipos estática
+
 
 
 
