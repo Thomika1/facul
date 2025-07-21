@@ -1,42 +1,20 @@
-# 🛠️ Compilador para a Linguagem GYH
+# Compilador GYH - Implementação Manual
 
-**Projeto educacional** desenvolvido para demonstrar os princípios de construção de compiladores, com implementações **manual** e **automática** dos analisadores léxico e sintático.
+**Projeto educativo** desenvolvido totalmente do zero em Java, sem uso de geradores de parser, para aprendizado dos fundamentos de compilação.
 
-## 📋 Visão Geral
-- **Linguagem Alvo**: GYH (linguagem didática com suporte a variáveis, condicionais, loops e operações aritméticas)
-- **Output**: Código C funcional
-- **Abordagens Implementadas**:
-  - **Versão Manual**: Analisador léxico e sintático escritos do zero em Java
-  - **Versão Automática**: Implementação paralela usando ANTLR4
+## 🛠️ Funcionalidades
+- **Analisador Léxico** (escrito manualmente)
+  - Máquina de estados finitos
+  - Suporte a 15 tipos de tokens
+  - Tratamento de erros léxicos
 
-## 🧩 Funcionalidades
-### Análise Léxica
-- Identificação de tokens (variáveis, números, operadores, palavras-chave)
-- Detecção de erros léxicos (símbolos inválidos)
+- **Analisador Sintático** (recursivo descendente)
+  - Gramática LL(1) implementada manualmente
+  - Pilha de estados para controle
 
-### Análise Sintática
-- Validação da estrutura do código-fonte conforme gramática definida
-- Dois modos de implementação:
-  - **Manual**: Algoritmo recursivo com pilha de estados
-  - **Automático**: Geração via ANTLR4
+- **Análise Semântica**
+  - Tabela de símbolos hierárquica
+  - Verificação de tipos estática
 
-### Análise Semântica
-- Tabela de símbolos para gerenciamento de escopos
-- Verificação de tipos (INT/REAL)
-- Detecção de:
-  - Variáveis não declaradas
-  - Atribuições inválidas
-  - Divisão por zero
-
-### Geração de Código
-- Tradução para C99 com:
-  - Preservação da lógica original
-  - Mapeamento de tipos (GYH → C)
-
-## 🛠️ Tecnologias
-| Componente       | Tecnologias Utilizadas |
-|------------------|-----------------------|
-| Frontend         | Java 11               |
-| Análise Automática | ANTLR4               |
 
 
