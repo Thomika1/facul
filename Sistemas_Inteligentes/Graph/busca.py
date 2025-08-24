@@ -12,7 +12,8 @@ class EstadoAponta:
 
 
 def main():
-    print(main)
+    
+    graph = Estados(EstadoAponta,)
 
 
 
