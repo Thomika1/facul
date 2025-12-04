@@ -13,3 +13,4 @@
 
 # Ignora diretórios gerados pelo IDE
 bin/
+SI_projeto_final/data/*.csv
