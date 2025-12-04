@@ -1,0 +1,8 @@
+SI_projeto_final/data/*.csv
+SI_projeto_final/data/all/*.csv
+SI_projeto_final/data/rankings/*.csv
+SI_projeto_final/data/qual_chall/*.csv
+SI_projeto_final/data/other/*.csv
+SI_projeto_final/data/test/*.csv
+data/*.csv
+data/all/*.csv
