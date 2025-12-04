@@ -6,3 +6,4 @@ SI_projeto_final/data/other/*.csv
 SI_projeto_final/data/test/*.csv
 data/*.csv
 data/all/*.csv
+data/qual_chall/*.csv
